@@ -1,569 +1,392 @@
-// Web Parser Pro - Professional Edition
-class WebParserPro {
-    constructor() {
-        this.isParsing = false;
-        this.results = null;
-        this.currentUrl = null;
-        
-        // Professional CORS proxies
-        this.proxies = [
-            'https://api.codetabs.com/v1/proxy?quest=',
-            'https://corsproxy.io/?',
-            'https://api.allorigins.win/raw?url='
-        ];
-        
-        // Rate limiting
-        this.rateLimit = {
-            lastRequest: 0,
-            minInterval: 1000 // 1 second between requests
-        };
-        
-        this.init();
-    }
+<!DOCTYPE html>
+<html lang="ru" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Web Parser Pro - профессиональный инструмент для безопасного парсинга веб-сайтов и анализа контента. Работает полностью в браузере.">
+    <meta name="keywords" content="парсер сайтов, веб-скрапинг, анализ веб-страниц, извлечение данных, SEO инструменты">
+    <meta name="author" content="Dima Dimonov">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="robots" content="index, follow">
     
-    init() {
-        console.log('🚀 Web Parser Pro v2.0 initialized');
-        this.bindEvents();
-        this.loadExamples();
-        this.checkUpdates();
-    }
+    <!-- Open Graph -->
+    <meta property="og:title" content="Web Parser Pro - Профессиональный парсер сайтов">
+    <meta property="og:description" content="Безопасный инструмент для анализа веб-сайтов и извлечения данных прямо в браузере">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webparser.pro">
+    <meta property="og:image" content="https://webparser.pro/og-image.png">
+    <meta property="og:locale" content="ru_RU">
     
-    bindEvents() {
-        // Core functionality
-        document.getElementById('parseBtn')?.addEventListener('click', () => this.parseWebsite());
-        document.getElementById('clearBtn')?.addEventListener('click', () => this.clearResults());
-        document.getElementById('copyResults')?.addEventListener('click', () => this.copyToClipboard());
-        document.getElementById('exportResults')?.addEventListener('click', () => this.exportResults());
-        
-        // Keyboard shortcuts
-        document.getElementById('urlInput')?.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                this.parseWebsite();
-            }
-        });
-        
-        // URL input validation
-        document.getElementById('urlInput')?.addEventListener('input', (e) => {
-            this.validateUrlInput(e.target);
-        });
-    }
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Web Parser Pro">
+    <meta name="twitter:description" content="Профессиональный инструмент для веб-анализа">
     
-    async parseWebsite() {
-        // Rate limiting check
-        const now = Date.now();
-        if (now - this.rateLimit.lastRequest < this.rateLimit.minInterval) {
-            this.showToast('Пожалуйста, подождите немного между запросами', 'warning');
-            return;
+    <!-- AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9637875222782598" crossorigin="anonymous"></script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NZ3C5T6F4F"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-NZ3C5T6F4F');
+    </script>
+    
+    <title>Web Parser Pro - Профессиональный инструмент для анализа веб-сайтов</title>
+    
+    <!-- Безопасные системные шрифты -->
+    <style>
+        /* System fonts as fallback */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
         }
-        
-        const url = document.getElementById('urlInput').value.trim();
-        if (!this.validateUrl(url)) {
-            this.showToast('Пожалуйста, введите корректный URL', 'error');
-            return;
-        }
-        
-        if (this.isParsing) return;
-        
-        this.isParsing = true;
-        this.currentUrl = url;
-        this.showProgress();
-        this.updateProgress(10, 'Подготовка к анализу...');
-        
-        try {
-            // Analytics
-            if (typeof gtag === 'function') {
-                gtag('event', 'parse_start', { url });
-            }
-            
-            // Fetch with retry logic
-            const html = await this.fetchWithRetry(url);
-            this.updateProgress(40, 'Получен HTML контент');
-            
-            // Parse based on selected type
-            const dataType = document.getElementById('dataType').value;
-            const data = await this.parseWithTimeout(html, dataType);
-            this.updateProgress(70, 'Анализ данных...');
-            
-            // Format results
-            const format = document.getElementById('outputFormat').value;
-            const formattedResults = this.formatResults(data, format);
-            this.updateProgress(90, 'Форматирование результатов...');
-            
-            // Display results
-            this.displayResults(formattedResults, data);
-            this.updateProgress(100, 'Анализ завершен!', data.count || 1);
-            
-            // Success analytics
-            if (typeof gtag === 'function') {
-                gtag('event', 'parse_success', {
-                    url,
-                    data_type: dataType,
-                    items_found: data.count || 0
-                });
-            }
-            
-            this.rateLimit.lastRequest = Date.now();
-            
-        } catch (error) {
-            console.error('Parse error:', error);
-            this.showToast(`Ошибка: ${error.message}`, 'error');
-            
-            // Error analytics
-            if (typeof gtag === 'function') {
-                gtag('event', 'parse_error', {
-                    error: error.message,
-                    url: this.currentUrl
-                });
-            }
-            
-        } finally {
-            this.isParsing = false;
-            setTimeout(() => this.hideProgress(), 2000);
-        }
-    }
+    </style>
     
-    async fetchWithRetry(url, retries = 3) {
-        for (let attempt = 1; attempt <= retries; attempt++) {
-            try {
-                this.updateProgress(
-                    10 + (attempt - 1) * 10,
-                    `Попытка подключения (${attempt}/${retries})...`
-                );
-                
-                const proxy = this.proxies[(attempt - 1) % this.proxies.length];
-                const proxyUrl = proxy + encodeURIComponent(url);
-                
-                const response = await fetch(proxyUrl, {
-                    headers: {
-                        'User-Agent': 'Mozilla/5.0 (compatible; WebParserPro/2.0)',
-                        'Accept': 'text/html,application/xhtml+xml',
-                        'Accept-Language': 'ru-RU,ru;q=0.9',
-                        'Cache-Control': 'no-cache'
-                    },
-                    timeout: 10000
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const html = await response.text();
-                if (!html || html.length < 100) {
-                    throw new Error('Получен пустой или слишком короткий ответ');
-                }
-                
-                return html;
-                
-            } catch (error) {
-                if (attempt === retries) {
-                    throw new Error(`Не удалось загрузить страницу: ${error.message}`);
-                }
-                await this.sleep(1000 * attempt); // Exponential backoff
-            }
-        }
-    }
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    async parseWithTimeout(html, type) {
-        return new Promise((resolve, reject) => {
-            const timeout = setTimeout(() => {
-                reject(new Error('Таймаут анализа (30 секунд)'));
-            }, 30000);
-            
-            try {
-                const result = this.parseData(html, type);
-                clearTimeout(timeout);
-                resolve(result);
-            } catch (error) {
-                clearTimeout(timeout);
-                reject(error);
-            }
-        });
-    }
-    
-    parseData(html, type) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        
-        const baseURI = doc.baseURI || this.currentUrl;
-        
-        switch(type) {
-            case 'metadata':
-                const metadata = {
-                    title: doc.title || 'Не указан',
-                    description: doc.querySelector('meta[name="description"]')?.content || 'Не указано',
-                    keywords: doc.querySelector('meta[name="keywords"]')?.content || 'Не указаны',
-                    charset: doc.characterSet,
-                    language: doc.documentElement.lang || 'Не указан',
-                    viewport: doc.querySelector('meta[name="viewport"]')?.content || 'Не указано',
-                    robots: doc.querySelector('meta[name="robots"]')?.content || 'Не указано',
-                    ogTitle: doc.querySelector('meta[property="og:title"]')?.content || 'Не указано',
-                    ogDescription: doc.querySelector('meta[property="og:description"]')?.content || 'Не указано'
-                };
-                return { ...metadata, count: Object.keys(metadata).length };
-                
-            case 'links':
-                const links = [];
-                doc.querySelectorAll('a[href]').forEach(link => {
-                    const href = link.getAttribute('href');
-                    if (href && !href.startsWith('javascript:') && !href.startsWith('#')) {
-                        const absoluteUrl = href.startsWith('http') ? href : new URL(href, baseURI).href;
-                        links.push({
-                            text: link.textContent.trim().substring(0, 100) || '[без текста]',
-                            href: absoluteUrl,
-                            isExternal: href.startsWith('http') && !href.includes(baseURI),
-                            rel: link.getAttribute('rel') || '',
-                            target: link.getAttribute('target') || '_self'
-                        });
-                    }
-                });
-                return { links, count: links.length };
-                
-            case 'headings':
-                const headings = { h1: [], h2: [], h3: [], h4: [], h5: [], h6: [] };
-                for (let i = 1; i <= 6; i++) {
-                    doc.querySelectorAll(`h${i}`).forEach(h => {
-                        headings[`h${i}`].push({
-                            text: h.textContent.trim(),
-                            id: h.id || null
-                        });
-                    });
-                }
-                const totalHeadings = Object.values(headings).reduce((sum, arr) => sum + arr.length, 0);
-                return { ...headings, count: totalHeadings };
-                
-            case 'images':
-                const images = [];
-                doc.querySelectorAll('img').forEach(img => {
-                    const src = img.getAttribute('src');
-                    if (src) {
-                        const absoluteSrc = src.startsWith('http') ? src : new URL(src, baseURI).href;
-                        images.push({
-                            src: absoluteSrc,
-                            alt: img.getAttribute('alt') || '',
-                            width: img.getAttribute('width') || null,
-                            height: img.getAttribute('height') || null,
-                            loading: img.getAttribute('loading') || 'eager'
-                        });
-                    }
-                });
-                return { images, count: images.length };
-                
-            case 'text':
-                const textContent = doc.body.textContent || '';
-                const sentences = textContent
-                    .replace(/\s+/g, ' ')
-                    .split(/[.!?]+/)
-                    .filter(s => s.trim().length > 10)
-                    .map(s => s.trim())
-                    .slice(0, 50);
-                    
-                const words = textContent
-                    .toLowerCase()
-                    .match(/\b[\w']+\b/g) || [];
-                    
-                const wordCount = words.length;
-                const uniqueWords = [...new Set(words)].length;
-                
-                return {
-                    sentences,
-                    wordCount,
-                    uniqueWords,
-                    readingTime: Math.ceil(wordCount / 200), // minutes
-                    count: sentences.length
-                };
-                
-            default:
-                return { error: 'Неизвестный тип анализа', count: 0 };
-        }
-    }
-    
-    formatResults(data, format) {
-        switch(format) {
-            case 'json':
-                return JSON.stringify(data, null, 2);
-                
-            case 'csv':
-                return this.convertToCSV(data);
-                
-            case 'html':
-                return this.convertToHTML(data);
-                
-            default:
-                return JSON.stringify(data, null, 2);
-        }
-    }
-    
-    convertToCSV(data) {
-        if (!data || typeof data !== 'object') return '';
-        
-        if (Array.isArray(data.links)) {
-            const headers = ['Text', 'URL', 'External', 'Rel'];
-            const rows = data.links.map(link => [
-                `"${link.text.replace(/"/g, '""')}"`,
-                `"${link.href}"`,
-                link.isExternal ? 'Yes' : 'No',
-                `"${link.rel}"`
-            ]);
-            return [headers.join(','), ...rows.map(row => row.join(','))].join('\n');
-        }
-        
-        return 'CSV формат доступен только для табличных данных';
-    }
-    
-    convertToHTML(data) {
-        let html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Web Parser Pro Results</title></head><body>';
-        html += '<h1>Результаты анализа</h1>';
-        
-        for (const [key, value] of Object.entries(data)) {
-            if (key === 'count') continue;
-            
-            html += `<h2>${key}</h2>`;
-            if (Array.isArray(value)) {
-                html += '<ul>';
-                value.forEach(item => {
-                    if (typeof item === 'object') {
-                        html += '<li>' + JSON.stringify(item) + '</li>';
-                    } else {
-                        html += `<li>${item}</li>`;
-                    }
-                });
-                html += '</ul>';
-            } else if (typeof value === 'object') {
-                html += '<pre>' + JSON.stringify(value, null, 2) + '</pre>';
-            } else {
-                html += `<p><strong>${key}:</strong> ${value}</p>`;
-            }
-        }
-        
-        html += '</body></html>';
-        return html;
-    }
-    
-    displayResults(formattedResults, rawData) {
-        const output = document.getElementById('resultsOutput');
-        const format = document.getElementById('outputFormat').value;
-        
-        // Clear previous results
-        output.innerHTML = '';
-        
-        if (format === 'json') {
-            const pre = document.createElement('pre');
-            pre.textContent = formattedResults;
-            pre.className = 'json-output';
-            output.appendChild(pre);
-        } else if (format === 'csv') {
-            const pre = document.createElement('pre');
-            pre.textContent = formattedResults;
-            pre.className = 'csv-output';
-            output.appendChild(pre);
-        } else if (format === 'html') {
-            const iframe = document.createElement('iframe');
-            iframe.srcdoc = formattedResults;
-            iframe.style.width = '100%';
-            iframe.style.height = '400px';
-            iframe.style.border = '1px solid var(--border)';
-            iframe.style.borderRadius = 'var(--radius)';
-            output.appendChild(iframe);
-        }
-        
-        // Show summary
-        if (rawData.count > 0) {
-            this.showToast(`Найдено ${rawData.count} элементов`, 'success');
-        }
-        
-        this.results = { formatted: formattedResults, raw: rawData };
-    }
-    
-    validateUrl(url) {
-        try {
-            const urlObj = new URL(url);
-            return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
-        } catch {
-            return false;
-        }
-    }
-    
-    validateUrlInput(input) {
-        if (input.value.trim() && this.validateUrl(input.value.trim())) {
-            input.style.borderColor = 'var(--success)';
-        } else {
-            input.style.borderColor = '';
-        }
-    }
-    
-    showProgress() {
-        document.getElementById('progressBar').style.display = 'block';
-        document.getElementById('parseBtn').disabled = true;
-        document.getElementById('clearBtn').disabled = true;
-    }
-    
-    updateProgress(percent, text, items = 0) {
-        document.getElementById('progressFill').style.width = `${percent}%`;
-        document.getElementById('progressPercent').textContent = `${percent}%`;
-        document.getElementById('statusText').textContent = text;
-        document.getElementById('itemsCounter').textContent = items > 0 ? `${items} элементов` : '';
-    }
-    
-    hideProgress() {
-        const progressBar = document.getElementById('progressBar');
-        if (progressBar) progressBar.style.display = 'none';
-        
-        document.getElementById('parseBtn').disabled = false;
-        document.getElementById('clearBtn').disabled = false;
-    }
-    
-    clearResults() {
-        const output = document.getElementById('resultsOutput');
-        output.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-search"></i>
-                <h4>Результаты анализа появятся здесь</h4>
-                <p>Введите URL и нажмите "Запустить анализ"</p>
-            </div>
-        `;
-        this.results = null;
-        document.getElementById('urlInput').value = '';
-        document.getElementById('urlInput').style.borderColor = '';
-    }
-    
-    async copyToClipboard() {
-        if (!this.results) {
-            this.showToast('Нет данных для копирования', 'warning');
-            return;
-        }
-        
-        try {
-            await navigator.clipboard.writeText(this.results.formatted);
-            this.showToast('Скопировано в буфер обмена!', 'success');
-        } catch (error) {
-            console.error('Copy failed:', error);
-            this.showToast('Ошибка копирования', 'error');
-        }
-    }
-    
-    exportResults() {
-        if (!this.results) {
-            this.showToast('Нет данных для экспорта', 'warning');
-            return;
-        }
-        
-        const format = document.getElementById('outputFormat').value;
-        const extension = format === 'csv' ? 'csv' : format === 'html' ? 'html' : 'json';
-        const filename = `webparser-pro-results-${Date.now()}.${extension}`;
-        
-        const blob = new Blob([this.results.formatted], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        this.showToast(`Файл ${filename} скачан`, 'success');
-    }
-    
-    showToast(message, type = 'info') {
-        const toast = document.createElement('div');
-        toast.className = `toast toast-${type}`;
-        toast.innerHTML = `
-            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-            <span>${message}</span>
-            <button class="toast-close"><i class="fas fa-times"></i></button>
-        `;
-        
-        document.body.appendChild(toast);
-        
-        // Add styles
-        const style = document.createElement('style');
-        style.textContent = `
-            .toast {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: var(--surface);
-                border: 1px solid var(--border);
-                border-left: 4px solid var(--primary);
-                border-radius: var(--radius);
-                padding: 1rem 1.5rem;
-                display: flex;
-                align-items: center;
-                gap: 0.75rem;
-                box-shadow: var(--shadow-lg);
-                z-index: 9999;
-                animation: slideIn 0.3s ease;
-                max-width: 400px;
-            }
-            .toast-success { border-left-color: var(--success); }
-            .toast-error { border-left-color: var(--danger); }
-            .toast-warning { border-left-color: var(--warning); }
-            .toast .toast-close {
-                background: none;
-                border: none;
-                color: var(--text-muted);
-                cursor: pointer;
-                padding: 0.25rem;
-                margin-left: auto;
-            }
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Close button
-        toast.querySelector('.toast-close').addEventListener('click', () => {
-            toast.remove();
-        });
-        
-        // Auto remove after 5 seconds
-        setTimeout(() => {
-            if (toast.parentNode) {
-                toast.remove();
-            }
-        }, 5000);
-    }
-    
-    loadExamples() {
-        const examples = [
-            { url: 'https://example.com', name: 'Пример сайта' },
-            { url: 'https://developer.mozilla.org', name: 'MDN Web Docs' },
-            { url: 'https://github.com', name: 'GitHub' }
-        ];
-        
-        // Could be used for example buttons if added
-    }
-    
-    checkUpdates() {
-        // Check for updates periodically
-        setInterval(() => {
-            if (navigator.onLine) {
-                console.log('Checking for updates...');
-                // Update logic here
-            }
-        }, 3600000); // Every hour
-    }
-    
-    sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-}
+    <!-- Стили -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-code"></i>
+                    <span>Web Parser Pro</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#parser" class="nav-link active"><i class="fas fa-globe"></i> Парсер</a>
+                    <a href="#analyzer" class="nav-link"><i class="fas fa-chart-bar"></i> Анализатор</a>
+                    <a href="#tools" class="nav-link"><i class="fas fa-tools"></i> Инструменты</a>
+                    <a href="privacy.html" class="nav-link"><i class="fas fa-shield-alt"></i> Конфиденциальность</a>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    window.webParser = new WebParserPro();
-    
-    // Initialize AdSense
-    setTimeout(() => {
-        try {
-            if (typeof adsbygoogle !== 'undefined') {
-                (adsbygoogle = window.adsbygoogle || []).push({});
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Профессиональный анализ веб-сайтов</h1>
+                <p class="hero-subtitle">Безопасный инструмент для парсинга и анализа контента. Работает полностью в вашем браузере.</p>
+                
+                <!-- AdSense Banner -->
+                <div class="ad-container ad-top">
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-9637875222782598"
+                         data-ad-slot="6353568398"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Parser Section -->
+            <section id="parser" class="section active">
+                <h2 class="section-title"><i class="fas fa-cogs"></i> Веб-парсер</h2>
+                <p class="section-subtitle">Анализируйте структуру любого сайта безопасно и эффективно</p>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-link"></i> Введите URL для анализа</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="url" id="urlInput" class="form-control" 
+                                   placeholder="https://example.com"
+                                   required>
+                            <div class="input-hint">Начните с http:// или https://</div>
+                        </div>
+                        
+                        <div class="options-grid">
+                            <div class="option-group">
+                                <label for="dataType"><i class="fas fa-filter"></i> Тип данных:</label>
+                                <select id="dataType" class="form-control">
+                                    <option value="metadata">Метаданные</option>
+                                    <option value="links">Внешние ссылки</option>
+                                    <option value="headings">Заголовки</option>
+                                    <option value="images">Изображения</option>
+                                    <option value="text">Текст контент</option>
+                                </select>
+                            </div>
+                            
+                            <div class="option-group">
+                                <label for="outputFormat"><i class="fas fa-file-export"></i> Формат вывода:</label>
+                                <select id="outputFormat" class="form-control">
+                                    <option value="json">JSON</option>
+                                    <option value="csv">CSV</option>
+                                    <option value="html">HTML</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="button-group">
+                            <button id="parseBtn" class="btn btn-primary">
+                                <i class="fas fa-play"></i> Запустить анализ
+                            </button>
+                            <button id="clearBtn" class="btn btn-secondary">
+                                <i class="fas fa-broom"></i> Очистить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Progress -->
+                <div id="progressBar" class="progress-card" style="display: none;">
+                    <div class="progress-info">
+                        <span id="statusText">Инициализация...</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-stats">
+                        <span><i class="fas fa-clock"></i> <span id="timeCounter">0с</span></span>
+                        <span><i class="fas fa-database"></i> <span id="itemsCounter">0 элементов</span></span>
+                    </div>
+                </div>
+                
+                <!-- Results -->
+                <div class="card results-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-list-alt"></i> Результаты анализа</h3>
+                        <div class="actions">
+                            <button id="copyResults" class="btn btn-sm">
+                                <i class="fas fa-copy"></i> Копировать
+                            </button>
+                            <button id="exportResults" class="btn btn-sm">
+                                <i class="fas fa-download"></i> Экспорт
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="resultsOutput" class="results-output">
+                            <div class="empty-state">
+                                <i class="fas fa-search"></i>
+                                <h4>Результаты анализа появятся здесь</h4>
+                                <p>Введите URL и нажмите "Запустить анализ"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Tools Section -->
+            <section id="tools" class="section">
+                <h2 class="section-title"><i class="fas fa-tools"></i> Быстрые инструменты</h2>
+                
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>HTML Валидатор</h3>
+                        <p>Проверьте HTML код на соответствие стандартам</p>
+                        <button class="btn btn-outline" onclick="openTool('html-validator')">
+                            <i class="fas fa-arrow-right"></i> Открыть
+                        </button>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>SEO Анализ</h3>
+                        <p>Быстрая проверка SEO-параметров страницы</p>
+                        <button class="btn btn-outline" onclick="openTool('seo-analyzer')">
+                            <i class="fas fa-arrow-right"></i> Открыть
+                        </button>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Адаптивность</h3>
+                        <p>Проверьте отображение на разных устройствах</p>
+                        <button class="btn btn-outline" onclick="openTool('responsive-test')">
+                            <i class="fas fa-arrow-right"></i> Открыть
+                        </button>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Скорость загрузки</h3>
+                        <p>Проанализируйте производительность сайта</p>
+                        <button class="btn btn-outline" onclick="openTool('speed-test')">
+                            <i class="fas fa-arrow-right"></i> Открыть
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AdSense Middle -->
+            <div class="ad-container ad-middle">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-9637875222782598"
+                     data-ad-slot="4879876155"
+                     data-ad-format="rectangle"
+                     data-full-width-responsive="true"></ins>
+            </div>
+
+            <!-- FAQ Section -->
+            <section class="section">
+                <h2 class="section-title"><i class="fas fa-question-circle"></i> Частые вопросы</h2>
+                
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h3>Это безопасно?</h3>
+                        <p>Да, весь анализ происходит в вашем браузере. Мы не храним и не передаем данные.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3>Нужна ли регистрация?</h3>
+                        <p>Нет, инструмент полностью бесплатный и не требует регистрации.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3>Есть ли ограничения?</h3>
+                        <p>Анализ ограничен общедоступными страницами. Соблюдайте правила robots.txt.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3>Поддерживает ли CORS?</h3>
+                        <p>Да, мы используем безопасные прокси для обхода CORS ограничений.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-code"></i>
+                        <span>Web Parser Pro</span>
+                    </div>
+                    <p>Профессиональные инструменты для веб-анализа</p>
+                    <div class="social-links">
+                        <a href="https://t.me/Dima_Dimonov_0130" class="social-link" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Инструменты</h4>
+                    <a href="#parser">Веб-парсер</a>
+                    <a href="#analyzer">Анализатор SEO</a>
+                    <a href="#tools">Быстрые инструменты</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Правовая информация</h4>
+                    <a href="privacy.html">Политика конфиденциальности</a>
+                    <a href="terms.html">Условия использования</a>
+                    <a href="#cookies">Настройки cookies</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Поддержка</h4>
+                    <a href="https://t.me/Dima_Dimonov_0130" target="_blank">Telegram</a>
+                    <a href="mailto:support@webparser.pro">Email</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2024 Web Parser Pro. Все права защищены.</p>
+                <p>Этот инструмент предназначен для законного анализа веб-сайтов. Уважайте авторские права и условия использования.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookie Consent -->
+    <div id="cookieConsent" class="cookie-consent">
+        <div class="cookie-content">
+            <p>Мы используем файлы cookie для улучшения работы сайта и показа релевантной рекламы. 
+               <a href="privacy.html#cookies">Подробнее</a></p>
+            <div class="cookie-buttons">
+                <button id="acceptCookies" class="btn btn-sm">Принять</button>
+                <button id="rejectCookies" class="btn btn-sm btn-outline">Отклонить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script>
+        // Инициализация AdSense
+        window.addEventListener('load', function() {
+            if (typeof(adsbygoogle) !== 'undefined') {
+                try {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                } catch(e) {
+                    console.log('AdSense initialization:', e);
+                }
             }
-        } catch (error) {
-            console.log('AdSense initialization error:', error);
+        });
+
+        // Тема
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-theme');
+            const icon = this.querySelector('i');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+        });
+
+        // Навигация
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                this.classList.add('active');
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Cookie Consent
+        if (!localStorage.getItem('cookiesAccepted')) {
+            document.getElementById('cookieConsent').style.display = 'block';
         }
-    }, 1000);
-});
+
+        document.getElementById('acceptCookies').addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            document.getElementById('cookieConsent').style.display = 'none';
+        });
+
+        document.getElementById('rejectCookies').addEventListener('click', function() {
+            localStorage.setItem('cookiesRejected', 'true');
+            document.getElementById('cookieConsent').style.display = 'none';
+        });
+        
+        // Утилиты
+        function openTool(tool) {
+            alert('Инструмент "' + tool + '" будет доступен в следующем обновлении!');
+        }
+    </script>
+</body>
+</html>
