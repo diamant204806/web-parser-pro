@@ -1,15 +1,25 @@
 {
   "name": "web-parser-pro",
   "version": "1.0.0",
-  "description": "Professional web parser and content downloader",
+  "description": "Professional web parser and analyzer tool",
   "main": "index.html",
   "scripts": {
-    "dev": "npx serve .",
-    "build": "mkdir -p public && cp -r *.html *.css *.js *.xml *.txt *.ico public/ 2>/dev/null || echo 'Static files ready'"
+    "dev": "npx serve . -p 3000",
+    "start": "npx serve . -p 3000"
   },
-  "keywords": ["parser", "web-scraping", "downloader"],
+  "keywords": [
+    "web-parser",
+    "scraping",
+    "seo",
+    "analysis"
+  ],
   "author": "Dima Dimonov",
   "license": "MIT",
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "serve": "^14.2.1"
+  },
+  "engines": {
+    "node": ">=16"
+  }
 }
