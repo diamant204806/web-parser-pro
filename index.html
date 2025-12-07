@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="Web Parser Pro - профессиональный инструмент для безопасного парсинга веб-сайтов и анализа контента. Работает полностью в браузере.">
-    <meta name="keywords" content="парсер сайтов, веб-скрапинг, анализ веб-страниц, извлечение данных, SEO инструменты">
+    <meta name="description" content="Web Parser Pro - профессиональный инструмент для парсинга веб-сайтов, Instagram и анализа контента.">
+    <meta name="keywords" content="парсер сайтов, Instagram парсер, веб-скрапинг, анализ профилей">
     <meta name="author" content="Dima Dimonov">
     <meta name="theme-color" content="#2563eb">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Web Parser Pro - Профессиональный парсер сайтов">
-    <meta property="og:description" content="Безопасный инструмент для анализа веб-сайтов и извлечения данных прямо в браузере">
+    <meta property="og:title" content="Web Parser Pro - Парсер сайтов и Instagram">
+    <meta property="og:description" content="Безопасный инструмент для анализа сайтов и Instagram профилей">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://webparser.pro">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1611262588024-d12430b98920?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80">
     <meta property="og:locale" content="ru_RU">
     
     <!-- Twitter -->
@@ -34,7 +34,15 @@
         gtag('config', 'G-NZ3C5T6F4F');
     </script>
     
-    <title>Web Parser Pro - Профессиональный инструмент для анализа веб-сайтов</title>
+    <title>Web Parser Pro - Парсер сайтов и Instagram</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
@@ -50,8 +58,8 @@
                     <span>Web Parser Pro</span>
                 </div>
                 <div class="nav-links">
-                    <a href="#parser" class="nav-link active"><i class="fas fa-globe"></i> Парсер</a>
-                    <a href="#analyzer" class="nav-link"><i class="fas fa-chart-bar"></i> Анализатор</a>
+                    <a href="#parser" class="nav-link active"><i class="fas fa-globe"></i> Веб-парсер</a>
+                    <a href="#instagram" class="nav-link"><i class="fab fa-instagram"></i> Instagram</a>
                     <a href="#tools" class="nav-link"><i class="fas fa-tools"></i> Инструменты</a>
                     <a href="privacy.html" class="nav-link"><i class="fas fa-shield-alt"></i> Конфиденциальность</a>
                 </div>
@@ -66,8 +74,8 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">Профессиональный анализ веб-сайтов</h1>
-                <p class="hero-subtitle">Безопасный инструмент для парсинга и анализа контента. Работает полностью в вашем браузере.</p>
+                <h1 class="hero-title">Парсер сайтов и Instagram</h1>
+                <p class="hero-subtitle">Безопасный анализ веб-страниц и Instagram профилей. Работает в вашем браузере.</p>
                 
                 <!-- AdSense Banner -->
                 <div class="ad-container ad-top">
@@ -85,7 +93,7 @@
     <!-- Main Content -->
     <main class="main">
         <div class="container">
-            <!-- Parser Section -->
+            <!-- Web Parser Section -->
             <section id="parser" class="section active">
                 <h2 class="section-title"><i class="fas fa-cogs"></i> Веб-парсер</h2>
                 <p class="section-subtitle">Анализируйте структуру любого сайта безопасно и эффективно</p>
@@ -175,53 +183,106 @@
                 </div>
             </section>
 
-            <!-- Quick Tools Section -->
-            <section id="tools" class="section">
-                <h2 class="section-title"><i class="fas fa-tools"></i> Быстрые инструменты</h2>
+            <!-- Instagram Parser Section -->
+            <section id="instagram" class="section">
+                <h2 class="section-title"><i class="fab fa-instagram"></i> Instagram Парсер</h2>
+                <p class="section-subtitle">Анализ публичных Instagram профилей, постов и статистики</p>
                 
-                <div class="tools-grid">
-                    <div class="tool-card">
-                        <div class="tool-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <h3>HTML Валидатор</h3>
-                        <p>Проверьте HTML код на соответствие стандартам</p>
-                        <button class="btn btn-outline" onclick="openTool('html-validator')">
-                            <i class="fas fa-arrow-right"></i> Открыть
-                        </button>
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fab fa-instagram"></i> Instagram Анализ</h3>
                     </div>
-                    
-                    <div class="tool-card">
-                        <div class="tool-icon">
-                            <i class="fas fa-chart-line"></i>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="text" id="instagramInput" class="form-control" 
+                                   placeholder="Имя пользователя (без @)"
+                                   required>
+                            <div class="input-hint">Например: instagram, natgeo, nike</div>
                         </div>
-                        <h3>SEO Анализ</h3>
-                        <p>Быстрая проверка SEO-параметров страницы</p>
-                        <button class="btn btn-outline" onclick="openTool('seo-analyzer')">
-                            <i class="fas fa-arrow-right"></i> Открыть
-                        </button>
+                        
+                        <div class="options-grid">
+                            <div class="option-group">
+                                <label for="instagramDataType"><i class="fas fa-filter"></i> Тип данных:</label>
+                                <select id="instagramDataType" class="form-control">
+                                    <option value="profile">Профиль</option>
+                                    <option value="posts">Посты</option>
+                                    <option value="hashtags">Хештеги</option>
+                                    <option value="followers">Статистика</option>
+                                </select>
+                            </div>
+                            
+                            <div class="option-group">
+                                <label for="instagramLimit"><i class="fas fa-hashtag"></i> Лимит постов:</label>
+                                <select id="instagramLimit" class="form-control">
+                                    <option value="5">5 постов</option>
+                                    <option value="10">10 постов</option>
+                                    <option value="20">20 постов</option>
+                                    <option value="50">50 постов</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="button-group">
+                            <button id="parseInstagramBtn" class="btn btn-primary" style="background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);">
+                                <i class="fab fa-instagram"></i> Анализ Instagram
+                            </button>
+                            <button id="clearInstagramBtn" class="btn btn-secondary">
+                                <i class="fas fa-broom"></i> Очистить
+                            </button>
+                        </div>
                     </div>
-                    
-                    <div class="tool-card">
-                        <div class="tool-icon">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <h3>Адаптивность</h3>
-                        <p>Проверьте отображение на разных устройствах</p>
-                        <button class="btn btn-outline" onclick="openTool('responsive-test')">
-                            <i class="fas fa-arrow-right"></i> Открыть
-                        </button>
+                </div>
+                
+                <!-- Instagram Progress -->
+                <div id="instagramProgressBar" class="progress-card" style="display: none;">
+                    <div class="progress-info">
+                        <span id="instagramStatusText">Инициализация...</span>
+                        <span id="instagramProgressPercent">0%</span>
                     </div>
-                    
-                    <div class="tool-card">
-                        <div class="tool-icon">
-                            <i class="fas fa-bolt"></i>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="instagramProgressFill" style="background: linear-gradient(90deg, #E1306C, #C13584);"></div>
+                    </div>
+                    <div class="progress-stats">
+                        <span><i class="fas fa-clock"></i> <span id="instagramTimeCounter">0с</span></span>
+                        <span><i class="fas fa-images"></i> <span id="instagramItemsCounter">0 элементов</span></span>
+                    </div>
+                </div>
+                
+                <!-- Instagram Results -->
+                <div class="card results-card">
+                    <div class="card-header">
+                        <h3><i class="fab fa-instagram"></i> Результаты Instagram анализа</h3>
+                        <div class="actions">
+                            <button id="copyInstagramResults" class="btn btn-sm">
+                                <i class="fas fa-copy"></i> Копировать
+                            </button>
+                            <button id="exportInstagramResults" class="btn btn-sm">
+                                <i class="fas fa-download"></i> Экспорт
+                            </button>
                         </div>
-                        <h3>Скорость загрузки</h3>
-                        <p>Проанализируйте производительность сайта</p>
-                        <button class="btn btn-outline" onclick="openTool('speed-test')">
-                            <i class="fas fa-arrow-right"></i> Открыть
-                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div id="instagramResultsOutput" class="results-output">
+                            <div class="empty-state">
+                                <i class="fab fa-instagram"></i>
+                                <h4>Instagram анализ</h4>
+                                <p>Введите имя пользователя и нажмите "Анализ Instagram"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Instagram Tips -->
+                <div class="card">
+                    <div class="card-body">
+                        <h4><i class="fas fa-info-circle"></i> Важная информация:</h4>
+                        <ul style="color: var(--text-secondary); padding-left: 20px; margin-top: 10px;">
+                            <li>Работает только с публичными профилями</li>
+                            <li>Не требует логина или пароля</li>
+                            <li>Ограничено Instagram API (до 30 постов)</li>
+                            <li>Для приватных профилей нужен доступ</li>
+                            <li>Используется официальный GraphQL API</li>
+                        </ul>
                     </div>
                 </div>
             </section>
@@ -242,23 +303,23 @@
                 
                 <div class="faq-grid">
                     <div class="faq-item">
-                        <h3>Это безопасно?</h3>
-                        <p>Да, весь анализ происходит в вашем браузере. Мы не храним и не передаем данные.</p>
+                        <h3>Это законно?</h3>
+                        <p>Да, для публичных данных. Мы соблюдаем правила robots.txt и условия использования.</p>
                     </div>
                     
                     <div class="faq-item">
-                        <h3>Нужна ли регистрация?</h3>
-                        <p>Нет, инструмент полностью бесплатный и не требует регистрации.</p>
+                        <h3>Instagram парсер работает?</h3>
+                        <p>Да, анализирует публичные профили через официальный API без нарушения правил.</p>
                     </div>
                     
                     <div class="faq-item">
                         <h3>Есть ли ограничения?</h3>
-                        <p>Анализ ограничен общедоступными страницами. Соблюдайте правила robots.txt.</p>
+                        <p>Instagram API ограничивает 200 запросов в час. Сайты - соблюдаем CORS политику.</p>
                     </div>
                     
                     <div class="faq-item">
-                        <h3>Поддерживает ли CORS?</h3>
-                        <p>Да, мы используем безопасные прокси для обхода CORS ограничений.</p>
+                        <h3>Нужны ли учетные данные?</h3>
+                        <p>Нет, весь анализ происходит анонимно. Мы не храним логины/пароли.</p>
                     </div>
                 </div>
             </section>
@@ -274,10 +335,13 @@
                         <i class="fas fa-code"></i>
                         <span>Web Parser Pro</span>
                     </div>
-                    <p>Профессиональные инструменты для веб-анализа</p>
+                    <p>Профессиональные инструменты для веб и Instagram анализа</p>
                     <div class="social-links">
                         <a href="https://t.me/Dima_Dimonov_0130" class="social-link" target="_blank">
                             <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="https://instagram.com" class="social-link" target="_blank">
+                            <i class="fab fa-instagram"></i>
                         </a>
                     </div>
                 </div>
@@ -285,8 +349,8 @@
                 <div class="footer-section">
                     <h4>Инструменты</h4>
                     <a href="#parser">Веб-парсер</a>
-                    <a href="#analyzer">Анализатор SEO</a>
-                    <a href="#tools">Быстрые инструменты</a>
+                    <a href="#instagram">Instagram парсер</a>
+                    <a href="#tools">Другие инструменты</a>
                 </div>
                 
                 <div class="footer-section">
@@ -305,7 +369,7 @@
             
             <div class="footer-bottom">
                 <p>© 2024 Web Parser Pro. Все права защищены.</p>
-                <p>Этот инструмент предназначен для законного анализа веб-сайтов. Уважайте авторские права и условия использования.</p>
+                <p>Инструмент предназначен для законного анализа публичных данных. Уважайте авторские права.</p>
             </div>
         </div>
     </footer>
@@ -323,7 +387,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script src="script.js"></script>
     <script>
         // Инициализация AdSense
