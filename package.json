@@ -1,0 +1,15 @@
+{
+  "name": "web-parser-pro",
+  "version": "1.0.0",
+  "description": "Professional web parser and content downloader",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "mkdir -p public && cp -r *.html *.css *.js *.xml *.txt *.ico public/ 2>/dev/null || echo 'Static files ready'"
+  },
+  "keywords": ["parser", "web-scraping", "downloader"],
+  "author": "Dima Dimonov",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

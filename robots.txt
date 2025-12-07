@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://parser0130.netlify.app/sitemap.xml

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Web Parser Pro - профессиональный инструмент для безопасного парсинга сайтов и скачивания контента">
+    <meta name="keywords" content="парсер сайтов, скачать видео, скачать музыку, извлечь данные, веб-скрапинг">
+    <meta name="author" content="Dima Dimonov">
+    <meta name="theme-color" content="#4361ee">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Web Parser Pro - Профессиональный парсер сайтов">
+    <meta property="og:description" content="Извлекайте данные и скачивайте контент с любого сайта безопасно">
+    <meta property="og:image" content="https://parser0130.netlify.app/assets/og-image.jpg">
+    <meta property="og:url" content="https://parser0130.netlify.app">
+    <meta property="og:type" content="website">
+    
+    <!-- AdSense -->
+    <meta name="google-adsense-account" content="ca-pub-9637875222782598">
+    
+    <title>Web Parser Pro - Парсер сайтов и скачиватель видео/аудио</title>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NZ3C5T6F4F"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-NZ3C5T6F4F');
+    </script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9637875222782598" crossorigin="anonymous"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Стили -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body>
+    <div class="app-container">
+        <!-- ШАПКА -->
+        <header class="header">
+            <h1><i class="fas fa-code"></i> Web Parser Pro</h1>
+            <p class="subtitle">Профессиональный парсер сайтов и скачиватель контента</p>
+            
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-tab="parser">
+                    <i class="fas fa-globe"></i> Парсер
+                </button>
+                <button class="nav-tab" data-tab="downloader">
+                    <i class="fas fa-download"></i> Скачивание
+                </button>
+                <button class="nav-tab" data-tab="seal">
+                    <i class="fas fa-mobile-alt"></i> Seal App
+                </button>
+                <button class="nav-tab" data-tab="support">
+                    <i class="fas fa-headset"></i> Поддержка
+                </button>
+            </div>
+        </header>
+        
+        <!-- РЕКЛАМА -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-9637875222782598"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+        
+        <!-- ОСНОВНОЙ КОНТЕНТ -->
+        <main class="main-content">
+            <!-- ПАРСЕР -->
+            <div id="parser" class="tab-content active">
+                <div class="card">
+                    <h2><i class="fas fa-code"></i> Веб-парсер</h2>
+                    
+                    <div class="form-group">
+                        <label for="urlInput"><i class="fas fa-link"></i> URL сайта:</label>
+                        <input type="url" id="urlInput" class="form-control" 
+                               placeholder="https://example.com"
+                               value="https://soundcloud.com/cuxnb14c">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dataType">Тип данных:</label>
+                            <select id="dataType" class="form-control">
+                                <option value="html">Полный HTML</option>
+                                <option value="text">Только текст</option>
+                                <option value="links">Все ссылки</option>
+                                <option value="images">Изображения</option>
+                                <option value="metadata">Мета-данные</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="outputFormat">Формат вывода:</label>
+                            <select id="outputFormat" class="form-control">
+                                <option value="html">HTML файл</option>
+                                <option value="json">JSON</option>
+                                <option value="txt">Текст</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="parseBtn" class="btn btn-primary">
+                            <i class="fas fa-play"></i> Запустить парсинг
+                        </button>
+                        <button id="downloadHtmlBtn" class="btn btn-secondary">
+                            <i class="fas fa-download"></i> Скачать сайт
+                        </button>
+                        <button id="clearBtn" class="btn">
+                            <i class="fas fa-trash"></i> Очистить
+                        </button>
+                    </div>
+                    
+                    <!-- ПРОГРЕСС -->
+                    <div id="progressBar" class="progress-container">
+                        <div class="progress-info">
+                            <span id="statusText">Подготовка...</span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span><i class="fas fa-clock"></i> <span id="timeCounter">0с</span></span>
+                            <span><i class="fas fa-database"></i> <span id="itemsCounter">0</span></span>
+                        </div>
+                    </div>
+                    
+                    <!-- РЕЗУЛЬТАТЫ -->
+                    <div class="results-container">
+                        <div class="results-header">
+                            <h3><i class="fas fa-list"></i> Результаты</h3>
+                            <button id="copyResults" class="btn btn-small">
+                                <i class="fas fa-copy"></i> Копировать
+                            </button>
+                        </div>
+                        <pre id="resultsOutput">Здесь появятся результаты парсинга...</pre>
+                    </div>
+                </div>
+                
+                <!-- ПРИМЕРЫ -->
+                <div class="card">
+                    <h3><i class="fas fa-bolt"></i> Попробуйте на примерах:</h3>
+                    <div class="examples-grid">
+                        <button class="example-btn" data-url="https://soundcloud.com/cuxnb14c">
+                            <i class="fab fa-soundcloud"></i> SoundCloud
+                        </button>
+                        <button class="example-btn" data-url="https://youtube.com">
+                            <i class="fab fa-youtube"></i> YouTube
+                        </button>
+                        <button class="example-btn" data-url="https://github.com">
+                            <i class="fab fa-github"></i> GitHub
+                        </button>
+                        <button class="example-btn" data-url="https://news.ycombinator.com">
+                            <i class="fas fa-newspaper"></i> Hacker News
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- СКАЧИВАНИЕ -->
+            <div id="downloader" class="tab-content">
+                <div class="card">
+                    <h2><i class="fas fa-download"></i> Скачивание контента</h2>
+                    
+                    <div class="form-group">
+                        <label for="mediaUrl"><i class="fas fa-video"></i> Ссылка на видео/аудио:</label>
+                        <input type="url" id="mediaUrl" class="form-control" 
+                               placeholder="https://youtube.com/watch?v=...">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="mediaFormat">Формат:</label>
+                            <select id="mediaFormat" class="form-control">
+                                <option value="mp4">MP4 (Видео)</option>
+                                <option value="mp3">MP3 (Аудио)</option>
+                                <option value="best">Лучшее качество</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="mediaQuality">Качество:</label>
+                            <select id="mediaQuality" class="form-control">
+                                <option value="720">720p HD</option>
+                                <option value="480">480p</option>
+                                <option value="360">360p</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="analyzeBtn" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Анализировать
+                        </button>
+                        <button id="downloadMediaBtn" class="btn btn-success" disabled>
+                            <i class="fas fa-download"></i> Скачать
+                        </button>
+                    </div>
+                    
+                    <!-- ИНФОРМАЦИЯ -->
+                    <div id="mediaInfo" class="media-info">
+                        <h4><i class="fas fa-info-circle"></i> Информация о контенте:</h4>
+                        <div id="mediaDetails"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SEAL APP -->
+            <div id="seal" class="tab-content">
+                <div class="card">
+                    <h2><i class="fas fa-mobile-alt"></i> Seal - Лучший скачиватель для Android</h2>
+                    
+                    <div class="seal-content">
+                        <div class="seal-image">
+                            <img src="https://raw.githubusercontent.com/JunkFood02/Seal/master/fastlane/metadata/android/en-US/images/icon.png" alt="Seal">
+                        </div>
+                        <div class="seal-info">
+                            <h3>Бесплатный скачиватель видео и аудио</h3>
+                            <p>Поддерживает более 100 платформ:</p>
+                            <ul>
+                                <li>YouTube, Vimeo, Dailymotion</li>
+                                <li>SoundCloud, Bandcamp, Mixcloud</li>
+                                <li>Instagram, TikTok, Twitter</li>
+                                <li>Без рекламы, открытый исходный код</li>
+                            </ul>
+                            
+                            <div class="seal-buttons">
+                                <a href="https://f-droid.org/packages/com.junkfood.seal/" class="btn btn-primary" target="_blank">
+                                    <i class="fas fa-download"></i> Установить через F-Droid
+                                </a>
+                                <a href="https://github.com/JunkFood02/Seal" class="btn" target="_blank">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ПОДДЕРЖКА -->
+            <div id="support" class="tab-content">
+                <div class="card support-card">
+                    <h2><i class="fas fa-headset"></i> Поддержка и контакты</h2>
+                    <p>Есть вопросы или нашли ошибку? Пишите напрямую!</p>
+                    
+                    <!-- TELEGRAM -->
+                    <a href="https://t.me/Dima_Dimonov_0130" class="telegram-widget" target="_blank">
+                        <i class="fab fa-telegram"></i>
+                        <div>
+                            <h3>@Dima_Dimonov_0130</h3>
+                            <p>Нажмите для связи в Telegram</p>
+                        </div>
+                    </a>
+                    
+                    <div class="support-buttons">
+                        <button id="reportBugBtn" class="btn">
+                            <i class="fas fa-bug"></i> Сообщить об ошибке
+                        </button>
+                        <button id="featureRequestBtn" class="btn">
+                            <i class="fas fa-lightbulb"></i> Предложить функцию
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- ФУТЕР -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Web Parser Pro</h4>
+                    <p>Профессиональный инструмент для парсинга</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Ссылки</h4>
+                    <a href="privacy.html">Политика конфиденциальности</a>
+                    <a href="terms.html">Условия использования</a>
+                    <a href="https://t.me/Dima_Dimonov_0130">Поддержка</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2024 Web Parser Pro. Для законного использования.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- МОДАЛЬНОЕ ОКНО -->
+    <div id="bugModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-bug"></i> Сообщить об ошибке</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <textarea id="bugDescription" placeholder="Опишите ошибку..."></textarea>
+                <button id="sendBugReport" class="btn btn-telegram">
+                    <i class="fab fa-telegram"></i> Отправить в Telegram
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- СКРИПТЫ -->
+    <script src="script.js"></script>
+    <script>
+        // Инициализация AdSense
+        setTimeout(() => {
+            if (typeof(adsbygoogle) !== 'undefined') {
+                adsbygoogle = window.adsbygoogle || [];
+                adsbygoogle.push({});
+            }
+        }, 1000);
+        
+        // Вкладки
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                    
+                    document.getElementById(tabId).classList.add('active');
+                    this.classList.add('active');
+                });
+            });
+            
+            // Примеры
+            document.querySelectorAll('.example-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.getElementById('urlInput').value = this.dataset.url;
+                });
+            });
+            
+            // Модальное окно
+            document.getElementById('reportBugBtn')?.addEventListener('click', function() {
+                document.getElementById('bugModal').style.display = 'flex';
+            });
+            
+            document.querySelector('.modal-close')?.addEventListener('click', function() {
+                document.getElementById('bugModal').style.display = 'none';
+            });
+            
+            // Отправка в Telegram
+            document.getElementById('sendBugReport')?.addEventListener('click', function() {
+                const text = document.getElementById('bugDescription').value;
+                if (!text) return alert('Введите описание ошибки');
+                
+                const url = `https://t.me/Dima_Dimonov_0130?text=${encodeURIComponent('Баг: ' + text)}`;
+                window.open(url, '_blank');
+                document.getElementById('bugModal').style.display = 'none';
+            });
+            
+            // Закрытие модального
+            window.addEventListener('click', function(e) {
+                if (e.target === document.getElementById('bugModal')) {
+                    document.getElementById('bugModal').style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
