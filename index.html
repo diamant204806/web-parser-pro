@@ -1,440 +1,58 @@
 <!DOCTYPE html>
-<html lang="ru" prefix="og: http://ogp.me/ns#">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="Web Parser Pro - профессиональный инструмент для парсинга веб-сайтов, Instagram и анализа контента.">
-    <meta name="keywords" content="парсер сайтов, Instagram парсер, веб-скрапинг, анализ профилей">
-    <meta name="author" content="Dima Dimonov">
-    <meta name="theme-color" content="#2563eb">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="Web Parser Pro - Парсер сайтов и Instagram">
-    <meta property="og:description" content="Безопасный инструмент для анализа сайтов и Instagram профилей">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://webparser.pro">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1611262588024-d12430b98920?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80">
-    <meta property="og:locale" content="ru_RU">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Web Parser Pro">
-    <meta name="twitter:description" content="Профессиональный инструмент для веб-анализа">
-    
-    <!-- AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9637875222782598" crossorigin="anonymous"></script>
-    
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NZ3C5T6F4F"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-NZ3C5T6F4F');
-    </script>
-    
-    <title>Web Parser Pro - Парсер сайтов и Instagram</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Parser Pro — Удобный онлайн парсер сайтов</title>
+  <meta name="description" content="Современный онлайн сервис для парсинга сайтов. Бесплатно, быстро и удобно!">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Web Parser Pro">
+  <meta property="og:description" content="Современный онлайн сервис для парсинга сайтов.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- КОД GOOGLE ADSENSE: (ClientID и SlotID возьму из твоего текущего кода, иначе — замени на свои) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXX"
+    crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <nav class="navbar">
-                <div class="logo">
-                    <i class="fas fa-code"></i>
-                    <span>Web Parser Pro</span>
-                </div>
-                <div class="nav-links">
-                    <a href="#parser" class="nav-link active"><i class="fas fa-globe"></i> Веб-парсер</a>
-                    <a href="#instagram" class="nav-link"><i class="fab fa-instagram"></i> Instagram</a>
-                    <a href="#tools" class="nav-link"><i class="fas fa-tools"></i> Инструменты</a>
-                    <a href="privacy.html" class="nav-link"><i class="fas fa-shield-alt"></i> Конфиденциальность</a>
-                </div>
-                <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-moon"></i>
-                </button>
-            </nav>
-        </div>
+  <div class="container">
+    <header>
+      <h1>Web Parser Pro</h1>
+      <p>Парсер сайтов — бесплатно, быстро, удобно!</p>
     </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">Парсер сайтов и Instagram</h1>
-                <p class="hero-subtitle">Безопасный анализ веб-страниц и Instagram профилей. Работает в вашем браузере.</p>
-                
-                <!-- AdSense Banner -->
-                <div class="ad-container ad-top">
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-9637875222782598"
-                         data-ad-slot="6353568398"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Main Content -->
-    <main class="main">
-        <div class="container">
-            <!-- Web Parser Section -->
-            <section id="parser" class="section active">
-                <h2 class="section-title"><i class="fas fa-cogs"></i> Веб-парсер</h2>
-                <p class="section-subtitle">Анализируйте структуру любого сайта безопасно и эффективно</p>
-                
-                <div class="card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-link"></i> Введите URL для анализа</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <input type="url" id="urlInput" class="form-control" 
-                                   placeholder="https://example.com"
-                                   required>
-                            <div class="input-hint">Начните с http:// или https://</div>
-                        </div>
-                        
-                        <div class="options-grid">
-                            <div class="option-group">
-                                <label for="dataType"><i class="fas fa-filter"></i> Тип данных:</label>
-                                <select id="dataType" class="form-control">
-                                    <option value="metadata">Метаданные</option>
-                                    <option value="links">Внешние ссылки</option>
-                                    <option value="headings">Заголовки</option>
-                                    <option value="images">Изображения</option>
-                                    <option value="text">Текст контент</option>
-                                </select>
-                            </div>
-                            
-                            <div class="option-group">
-                                <label for="outputFormat"><i class="fas fa-file-export"></i> Формат вывода:</label>
-                                <select id="outputFormat" class="form-control">
-                                    <option value="json">JSON</option>
-                                    <option value="csv">CSV</option>
-                                    <option value="html">HTML</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="button-group">
-                            <button id="parseBtn" class="btn btn-primary">
-                                <i class="fas fa-play"></i> Запустить анализ
-                            </button>
-                            <button id="clearBtn" class="btn btn-secondary">
-                                <i class="fas fa-broom"></i> Очистить
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Progress -->
-                <div id="progressBar" class="progress-card" style="display: none;">
-                    <div class="progress-info">
-                        <span id="statusText">Инициализация...</span>
-                        <span id="progressPercent">0%</span>
-                    </div>
-                    <div class="progress-track">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                    <div class="progress-stats">
-                        <span><i class="fas fa-clock"></i> <span id="timeCounter">0с</span></span>
-                        <span><i class="fas fa-database"></i> <span id="itemsCounter">0 элементов</span></span>
-                    </div>
-                </div>
-                
-                <!-- Results -->
-                <div class="card results-card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-list-alt"></i> Результаты анализа</h3>
-                        <div class="actions">
-                            <button id="copyResults" class="btn btn-sm">
-                                <i class="fas fa-copy"></i> Копировать
-                            </button>
-                            <button id="exportResults" class="btn btn-sm">
-                                <i class="fas fa-download"></i> Экспорт
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div id="resultsOutput" class="results-output">
-                            <div class="empty-state">
-                                <i class="fas fa-search"></i>
-                                <h4>Результаты анализа появятся здесь</h4>
-                                <p>Введите URL и нажмите "Запустить анализ"</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Instagram Parser Section -->
-            <section id="instagram" class="section">
-                <h2 class="section-title"><i class="fab fa-instagram"></i> Instagram Парсер</h2>
-                <p class="section-subtitle">Анализ публичных Instagram профилей, постов и статистики</p>
-                
-                <div class="card">
-                    <div class="card-header">
-                        <h3><i class="fab fa-instagram"></i> Instagram Анализ</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <input type="text" id="instagramInput" class="form-control" 
-                                   placeholder="Имя пользователя (без @)"
-                                   required>
-                            <div class="input-hint">Например: instagram, natgeo, nike</div>
-                        </div>
-                        
-                        <div class="options-grid">
-                            <div class="option-group">
-                                <label for="instagramDataType"><i class="fas fa-filter"></i> Тип данных:</label>
-                                <select id="instagramDataType" class="form-control">
-                                    <option value="profile">Профиль</option>
-                                    <option value="posts">Посты</option>
-                                    <option value="hashtags">Хештеги</option>
-                                    <option value="followers">Статистика</option>
-                                </select>
-                            </div>
-                            
-                            <div class="option-group">
-                                <label for="instagramLimit"><i class="fas fa-hashtag"></i> Лимит постов:</label>
-                                <select id="instagramLimit" class="form-control">
-                                    <option value="5">5 постов</option>
-                                    <option value="10">10 постов</option>
-                                    <option value="20">20 постов</option>
-                                    <option value="50">50 постов</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="button-group">
-                            <button id="parseInstagramBtn" class="btn btn-primary" style="background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);">
-                                <i class="fab fa-instagram"></i> Анализ Instagram
-                            </button>
-                            <button id="clearInstagramBtn" class="btn btn-secondary">
-                                <i class="fas fa-broom"></i> Очистить
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Instagram Progress -->
-                <div id="instagramProgressBar" class="progress-card" style="display: none;">
-                    <div class="progress-info">
-                        <span id="instagramStatusText">Инициализация...</span>
-                        <span id="instagramProgressPercent">0%</span>
-                    </div>
-                    <div class="progress-track">
-                        <div class="progress-fill" id="instagramProgressFill" style="background: linear-gradient(90deg, #E1306C, #C13584);"></div>
-                    </div>
-                    <div class="progress-stats">
-                        <span><i class="fas fa-clock"></i> <span id="instagramTimeCounter">0с</span></span>
-                        <span><i class="fas fa-images"></i> <span id="instagramItemsCounter">0 элементов</span></span>
-                    </div>
-                </div>
-                
-                <!-- Instagram Results -->
-                <div class="card results-card">
-                    <div class="card-header">
-                        <h3><i class="fab fa-instagram"></i> Результаты Instagram анализа</h3>
-                        <div class="actions">
-                            <button id="copyInstagramResults" class="btn btn-sm">
-                                <i class="fas fa-copy"></i> Копировать
-                            </button>
-                            <button id="exportInstagramResults" class="btn btn-sm">
-                                <i class="fas fa-download"></i> Экспорт
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div id="instagramResultsOutput" class="results-output">
-                            <div class="empty-state">
-                                <i class="fab fa-instagram"></i>
-                                <h4>Instagram анализ</h4>
-                                <p>Введите имя пользователя и нажмите "Анализ Instagram"</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Instagram Tips -->
-                <div class="card">
-                    <div class="card-body">
-                        <h4><i class="fas fa-info-circle"></i> Важная информация:</h4>
-                        <ul style="color: var(--text-secondary); padding-left: 20px; margin-top: 10px;">
-                            <li>Работает только с публичными профилями</li>
-                            <li>Не требует логина или пароля</li>
-                            <li>Ограничено Instagram API (до 30 постов)</li>
-                            <li>Для приватных профилей нужен доступ</li>
-                            <li>Используется официальный GraphQL API</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- AdSense Middle -->
-            <div class="ad-container ad-middle">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-9637875222782598"
-                     data-ad-slot="4879876155"
-                     data-ad-format="rectangle"
-                     data-full-width-responsive="true"></ins>
-            </div>
-
-            <!-- FAQ Section -->
-            <section class="section">
-                <h2 class="section-title"><i class="fas fa-question-circle"></i> Частые вопросы</h2>
-                
-                <div class="faq-grid">
-                    <div class="faq-item">
-                        <h3>Это законно?</h3>
-                        <p>Да, для публичных данных. Мы соблюдаем правила robots.txt и условия использования.</p>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <h3>Instagram парсер работает?</h3>
-                        <p>Да, анализирует публичные профили через официальный API без нарушения правил.</p>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <h3>Есть ли ограничения?</h3>
-                        <p>Instagram API ограничивает 200 запросов в час. Сайты - соблюдаем CORS политику.</p>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <h3>Нужны ли учетные данные?</h3>
-                        <p>Нет, весь анализ происходит анонимно. Мы не храним логины/пароли.</p>
-                    </div>
-                </div>
-            </section>
-        </div>
+    <main>
+      <div class="main-content">
+        <!-- Форма парсинга -->
+        <section class="parser-section">
+          <form id="parserForm">
+            <label for="url">Введите URL сайта:</label>
+            <input type="url" id="url" name="url" required placeholder="https://example.com">
+            <button type="submit">Парсить</button>
+          </form>
+          <div id="result" class="result"></div>
+        </section>
+        <!-- Реклама сбоку -->
+        <aside class="ad-section">
+          <!-- Google AdSense Block -->
+          <ins class="adsbygoogle"
+            style="display:block;min-width:200px;max-width:300px;width:100%;height:280px;margin:auto"
+            data-ad-client="ca-pub-XXXXXXXXXXXXXXX"
+            data-ad-slot="YYYYYYYYYYYYY"
+            data-ad-format="auto"></ins>
+          <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </aside>
+      </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="logo">
-                        <i class="fas fa-code"></i>
-                        <span>Web Parser Pro</span>
-                    </div>
-                    <p>Профессиональные инструменты для веб и Instagram анализа</p>
-                    <div class="social-links">
-                        <a href="https://t.me/Dima_Dimonov_0130" class="social-link" target="_blank">
-                            <i class="fab fa-telegram"></i>
-                        </a>
-                        <a href="https://instagram.com" class="social-link" target="_blank">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Инструменты</h4>
-                    <a href="#parser">Веб-парсер</a>
-                    <a href="#instagram">Instagram парсер</a>
-                    <a href="#tools">Другие инструменты</a>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Правовая информация</h4>
-                    <a href="privacy.html">Политика конфиденциальности</a>
-                    <a href="terms.html">Условия использования</a>
-                    <a href="#cookies">Настройки cookies</a>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Поддержка</h4>
-                    <a href="https://t.me/Dima_Dimonov_0130" target="_blank">Telegram</a>
-                    <a href="mailto:support@webparser.pro">Email</a>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>© 2024 Web Parser Pro. Все права защищены.</p>
-                <p>Инструмент предназначен для законного анализа публичных данных. Уважайте авторские права.</p>
-            </div>
-        </div>
+    <footer>
+      <a href="privacy.html">Политика конфиденциальности</a>
+      <span>|</span>
+      <a href="terms.html">Пользовательское соглашение</a>
     </footer>
-
-    <!-- Cookie Consent -->
-    <div id="cookieConsent" class="cookie-consent">
-        <div class="cookie-content">
-            <p>Мы используем файлы cookie для улучшения работы сайта и показа релевантной рекламы. 
-               <a href="privacy.html#cookies">Подробнее</a></p>
-            <div class="cookie-buttons">
-                <button id="acceptCookies" class="btn btn-sm">Принять</button>
-                <button id="rejectCookies" class="btn btn-sm btn-outline">Отклонить</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script src="script.js"></script>
-    <script>
-        // Инициализация AdSense
-        window.addEventListener('load', function() {
-            if (typeof(adsbygoogle) !== 'undefined') {
-                try {
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                } catch(e) {
-                    console.log('AdSense initialization:', e);
-                }
-            }
-        });
-
-        // Тема
-        document.getElementById('themeToggle').addEventListener('click', function() {
-            document.body.classList.toggle('dark-theme');
-            const icon = this.querySelector('i');
-            icon.classList.toggle('fa-moon');
-            icon.classList.toggle('fa-sun');
-        });
-
-        // Навигация
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-                this.classList.add('active');
-                const targetId = this.getAttribute('href');
-                document.querySelector(targetId).classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        });
-
-        // Cookie Consent
-        if (!localStorage.getItem('cookiesAccepted')) {
-            document.getElementById('cookieConsent').style.display = 'block';
-        }
-
-        document.getElementById('acceptCookies').addEventListener('click', function() {
-            localStorage.setItem('cookiesAccepted', 'true');
-            document.getElementById('cookieConsent').style.display = 'none';
-        });
-
-        document.getElementById('rejectCookies').addEventListener('click', function() {
-            localStorage.setItem('cookiesRejected', 'true');
-            document.getElementById('cookieConsent').style.display = 'none';
-        });
-    </script>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
