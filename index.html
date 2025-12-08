@@ -3,29 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web Parser Pro — Удобный онлайн парсер сайтов</title>
-  <meta name="description" content="Современный онлайн сервис для парсинга сайтов. Бесплатно, быстро и удобно!">
+  <title>Web Parser Pro — Бесплатно, быстро, удобно!</title>
+  <meta name="description" content="Современный онлайн парсер сайтов. Бесплатно, быстро, удобно.">
   <link rel="icon" type="image/png" href="favicon.png">
-  <!-- Open Graph -->
-  <meta property="og:title" content="Web Parser Pro">
-  <meta property="og:description" content="Современный онлайн сервис для парсинга сайтов.">
-  <meta property="og:type" content="website">
-  <link rel="stylesheet" href="style.css">
-  
-  <!-- КОД GOOGLE ADSENSE: (ClientID и SlotID возьму из твоего текущего кода, иначе — замени на свои) -->
+
+  <!-- Google AdSense основной JS (замени на свой CLIENT_ID!) -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXX"
     crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
+  <div class="page-wrap">
     <header>
       <h1>Web Parser Pro</h1>
       <p>Парсер сайтов — бесплатно, быстро, удобно!</p>
     </header>
     <main>
-      <div class="main-content">
-        <!-- Форма парсинга -->
-        <section class="parser-section">
+      <div class="content-ad-wrap">
+        <!-- Основной контент + Парсер -->
+        <section class="parser-block">
           <form id="parserForm">
             <label for="url">Введите URL сайта:</label>
             <input type="url" id="url" name="url" required placeholder="https://example.com">
@@ -33,11 +29,10 @@
           </form>
           <div id="result" class="result"></div>
         </section>
-        <!-- Реклама сбоку -->
-        <aside class="ad-section">
-          <!-- Google AdSense Block -->
+        <!-- Рекламный блок справа -->
+        <aside class="ads-block">
           <ins class="adsbygoogle"
-            style="display:block;min-width:200px;max-width:300px;width:100%;height:280px;margin:auto"
+            style="display:block;min-width:180px;max-width:250px;width:100%;height:220px;background:white;border-radius:8px;"
             data-ad-client="ca-pub-XXXXXXXXXXXXXXX"
             data-ad-slot="YYYYYYYYYYYYY"
             data-ad-format="auto"></ins>
@@ -49,7 +44,7 @@
     </main>
     <footer>
       <a href="privacy.html">Политика конфиденциальности</a>
-      <span>|</span>
+      <span> | </span>
       <a href="terms.html">Пользовательское соглашение</a>
     </footer>
   </div>
